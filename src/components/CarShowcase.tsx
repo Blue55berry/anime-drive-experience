@@ -57,6 +57,45 @@ const cars: Car[] = [
       power: '1020 HP'
     },
     color: 'automotive-red'
+  },
+  {
+    id: 'convertible',
+    name: 'ElectricDrive C',
+    type: 'Luxury Convertible',
+    price: '$135,000',
+    image: sedanImage, // Reusing image for now
+    specs: {
+      range: '400 miles',
+      acceleration: '2.8s 0-60',
+      power: '890 HP'
+    },
+    color: 'automotive-gold'
+  },
+  {
+    id: 'truck',
+    name: 'ElectricDrive T',
+    type: 'Electric Truck',
+    price: '$78,000',
+    image: suvImage, // Reusing image for now
+    specs: {
+      range: '500 miles',
+      acceleration: '4.2s 0-60',
+      power: '600 HP'
+    },
+    color: 'primary'
+  },
+  {
+    id: 'hypercar',
+    name: 'ElectricDrive H',
+    type: 'Hypercar',
+    price: '$250,000',
+    image: coupeImage, // Reusing image for now
+    specs: {
+      range: '350 miles',
+      acceleration: '1.8s 0-60',
+      power: '1500 HP'
+    },
+    color: 'automotive-red'
   }
 ];
 

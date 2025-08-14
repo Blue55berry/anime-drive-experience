@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import CarShowcase from '@/components/CarShowcase';
+import CarInterior3D from '@/components/CarInterior3D';
 import PerformanceSection from '@/components/PerformanceSection';
 import ContactSection from '@/components/ContactSection';
 
@@ -10,6 +11,7 @@ const Index = () => {
       <Navigation />
       <HeroSection />
       <CarShowcase />
+      <CarInterior3D />
       <PerformanceSection />
       <ContactSection />
       
