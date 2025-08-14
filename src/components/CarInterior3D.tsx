@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 // Car interior component with 3D visualization
-const CarInteriorModel = ({ selectedCar }: { selectedCar: string }) => {
+const CarInteriorModel = () => {
   const seatRef = useRef<THREE.Group>(null);
   const dashboardRef = useRef<THREE.Mesh>(null);
   const steeringRef = useRef<THREE.Group>(null);
@@ -21,96 +21,134 @@ const CarInteriorModel = ({ selectedCar }: { selectedCar: string }) => {
 
   return (
     <group>
+      {/* Car Body Frame */}
+      <group>
+        {/* Front windshield frame */}
+        <Box args={[4, 0.1, 0.1]} position={[0, 1.5, 2]}>
+          <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.1} />
+        </Box>
+        
+        {/* Side pillars */}
+        <Box args={[0.1, 2, 0.1]} position={[-2, 0.5, 1.5]}>
+          <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.1} />
+        </Box>
+        <Box args={[0.1, 2, 0.1]} position={[2, 0.5, 1.5]}>
+          <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.1} />
+        </Box>
+        
+        {/* Roof frame */}
+        <Box args={[4, 0.1, 3]} position={[0, 1.8, 0]}>
+          <meshStandardMaterial color="#2a2a2a" metalness={0.8} roughness={0.2} />
+        </Box>
+      </group>
+
       {/* Dashboard */}
       <Box
         ref={dashboardRef}
-        args={[4, 0.3, 1]}
-        position={[0, 0, 1.5]}
+        args={[4, 0.4, 1.2]}
+        position={[0, 0, 1.8]}
       >
         <meshStandardMaterial
-          color={selectedCar === 'luxury' ? '#2a2a2a' : '#1a1a1a'}
+          color="#2a2a2a"
           metalness={0.8}
           roughness={0.2}
         />
       </Box>
 
+      {/* Central console */}
+      <Box args={[0.8, 0.3, 1.5]} position={[0, -0.2, 0.3]}>
+        <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.1} />
+      </Box>
+
       {/* Steering Wheel */}
-      <group ref={steeringRef} position={[0.5, 0.2, 0.8]}>
-        <Sphere args={[0.02]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#333" />
-        </Sphere>
-        <Box args={[0.8, 0.03, 0.03]} position={[0, 0, 0]}>
+      <group ref={steeringRef} position={[-0.6, 0.2, 1.2]}>
+        {/* Steering wheel ring */}
+        <mesh>
+          <torusGeometry args={[0.4, 0.05, 8, 16]} />
           <meshStandardMaterial color="#222" metalness={0.9} roughness={0.1} />
-        </Box>
-        <Box args={[0.03, 0.4, 0.03]} position={[0, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <meshStandardMaterial color="#222" metalness={0.9} roughness={0.1} />
+        </mesh>
+        {/* Steering column */}
+        <Box args={[0.05, 0.05, 0.8]} position={[0, 0, -0.4]}>
+          <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
         </Box>
       </group>
 
       {/* Driver Seat */}
       <group ref={seatRef} position={[-0.8, -0.5, 0]}>
-        <Box args={[0.6, 0.8, 0.6]} position={[0, 0, 0]}>
-          <meshStandardMaterial 
-            color={selectedCar === 'luxury' ? '#8B4513' : '#2F2F2F'} 
-            roughness={0.8}
-          />
+        {/* Seat base */}
+        <Box args={[0.6, 0.1, 0.6]}>
+          <meshStandardMaterial color="#8B4513" roughness={0.8} />
         </Box>
-        <Box args={[0.6, 0.1, 0.8]} position={[0, 0.45, 0.1]}>
-          <meshStandardMaterial 
-            color={selectedCar === 'luxury' ? '#8B4513' : '#2F2F2F'} 
-            roughness={0.8}
-          />
+        {/* Seat back */}
+        <Box args={[0.6, 0.8, 0.1]} position={[0, 0.35, -0.25]}>
+          <meshStandardMaterial color="#8B4513" roughness={0.8} />
+        </Box>
+        {/* Headrest */}
+        <Box args={[0.4, 0.2, 0.1]} position={[0, 0.9, -0.2]}>
+          <meshStandardMaterial color="#8B4513" roughness={0.8} />
         </Box>
       </group>
 
       {/* Passenger Seat */}
       <group position={[0.8, -0.5, 0]}>
-        <Box args={[0.6, 0.8, 0.6]} position={[0, 0, 0]}>
-          <meshStandardMaterial 
-            color={selectedCar === 'luxury' ? '#8B4513' : '#2F2F2F'} 
-            roughness={0.8}
-          />
+        {/* Seat base */}
+        <Box args={[0.6, 0.1, 0.6]}>
+          <meshStandardMaterial color="#8B4513" roughness={0.8} />
         </Box>
-        <Box args={[0.6, 0.1, 0.8]} position={[0, 0.45, 0.1]}>
-          <meshStandardMaterial 
-            color={selectedCar === 'luxury' ? '#8B4513' : '#2F2F2F'} 
-            roughness={0.8}
-          />
+        {/* Seat back */}
+        <Box args={[0.6, 0.8, 0.1]} position={[0, 0.35, -0.25]}>
+          <meshStandardMaterial color="#8B4513" roughness={0.8} />
+        </Box>
+        {/* Headrest */}
+        <Box args={[0.4, 0.2, 0.1]} position={[0, 0.9, -0.2]}>
+          <meshStandardMaterial color="#8B4513" roughness={0.8} />
         </Box>
       </group>
+
+      {/* Door panels */}
+      <Plane args={[1.5, 1.5]} rotation={[0, Math.PI / 2, 0]} position={[-2.2, 0.3, 0]}>
+        <meshStandardMaterial color="#2a2a2a" roughness={0.7} />
+      </Plane>
+      <Plane args={[1.5, 1.5]} rotation={[0, -Math.PI / 2, 0]} position={[2.2, 0.3, 0]}>
+        <meshStandardMaterial color="#2a2a2a" roughness={0.7} />
+      </Plane>
 
       {/* Floor */}
       <Plane args={[5, 4]} rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <meshStandardMaterial color="#1a1a1a" roughness={0.9} />
       </Plane>
 
-      {/* Ceiling */}
-      <Plane args={[5, 4]} rotation={[Math.PI / 2, 0, 0]} position={[0, 2, 0]}>
-        <meshStandardMaterial color="#2a2a2a" roughness={0.7} />
-      </Plane>
-
-      {/* Ambient lighting effect */}
-      <Sphere args={[0.05]} position={[0, 1.5, 1]}>
+      {/* Interior lighting */}
+      <Sphere args={[0.03]} position={[0, 1.6, 0]}>
+        <meshBasicMaterial color="#ffffff" />
+      </Sphere>
+      <pointLight position={[0, 1.6, 0]} color="#ffffff" intensity={0.3} />
+      
+      {/* Ambient blue accent lighting */}
+      <Sphere args={[0.02]} position={[-1.8, 0, 0]}>
         <meshBasicMaterial color="#00ffff" />
       </Sphere>
-      <pointLight position={[0, 1.5, 1]} color="#00ffff" intensity={0.5} />
+      <Sphere args={[0.02]} position={[1.8, 0, 0]}>
+        <meshBasicMaterial color="#00ffff" />
+      </Sphere>
+      <pointLight position={[-1.8, 0, 0]} color="#00ffff" intensity={0.4} />
+      <pointLight position={[1.8, 0, 0]} color="#00ffff" intensity={0.4} />
       
-      {/* Text labels */}
+      {/* Text label */}
       <Text
-        position={[0, 1, 2]}
-        fontSize={0.2}
+        position={[0, 1.2, 2.5]}
+        fontSize={0.15}
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
       >
-        {selectedCar === 'luxury' ? 'Premium Interior' : 'Sport Interior'}
+        ElectricDrive Interior
       </Text>
     </group>
   );
 };
 
 const CarInterior3D = () => {
-  const [selectedCar, setSelectedCar] = useState<'luxury' | 'sport'>('luxury');
 
   return (
     <section className="py-20 px-6 bg-background">
@@ -123,36 +161,12 @@ const CarInterior3D = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-5xl font-bold mb-6">
-            <span className="text-chrome">Interior</span> <span className="text-glow">Experience</span>
+            <span className="text-chrome">Car</span> <span className="text-glow">Interior</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Explore the meticulously crafted interiors of our electric vehicles in 3D.
-            Every detail designed for comfort, luxury, and innovation.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Explore the detailed interior structure of our premium electric vehicle.
+            Every component crafted for luxury, comfort, and advanced technology.
           </p>
-          
-          {/* Interior Type Selector */}
-          <div className="flex justify-center gap-4 mb-8">
-            <button
-              onClick={() => setSelectedCar('luxury')}
-              className={`px-6 py-3 rounded-lg transition-all duration-300 ${
-                selectedCar === 'luxury'
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-card text-muted-foreground hover:bg-card/80'
-              }`}
-            >
-              Luxury Interior
-            </button>
-            <button
-              onClick={() => setSelectedCar('sport')}
-              className={`px-6 py-3 rounded-lg transition-all duration-300 ${
-                selectedCar === 'sport'
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-card text-muted-foreground hover:bg-card/80'
-              }`}
-            >
-              Sport Interior
-            </button>
-          </div>
         </motion.div>
 
         {/* 3D Canvas */}
@@ -164,14 +178,14 @@ const CarInterior3D = () => {
           viewport={{ once: true }}
         >
           <Canvas
-            camera={{ position: [3, 2, 3], fov: 60 }}
+            camera={{ position: [4, 3, 4], fov: 60 }}
             gl={{ antialias: true, alpha: true }}
           >
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[10, 10, 5]} intensity={1} />
-            <pointLight position={[-10, -10, -10]} intensity={0.3} />
+            <ambientLight intensity={0.3} />
+            <directionalLight position={[10, 10, 5]} intensity={0.8} />
+            <pointLight position={[-10, -10, -10]} intensity={0.2} />
             
-            <CarInteriorModel selectedCar={selectedCar} />
+            <CarInteriorModel />
             
             <OrbitControls
               enablePan={true}
