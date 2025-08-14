@@ -1,89 +1,41 @@
-import { useEffect, useRef } from 'react';
-const anime = require('animejs');
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 const ContactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Animate contact section
-            anime({
-              targets: '.contact-content',
-              opacity: [0, 1],
-              translateY: [50, 0],
-              duration: 1000,
-              easing: 'easeOutCubic'
-            });
-
-            anime({
-              targets: '.contact-form',
-              opacity: [0, 1],
-              translateX: [50, 0],
-              duration: 1200,
-              easing: 'easeOutCubic',
-              delay: 300
-            });
-
-            anime({
-              targets: '.contact-info',
-              opacity: [0, 1],
-              translateX: [-50, 0],
-              duration: 1200,
-              easing: 'easeOutCubic',
-              delay: 300
-            });
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Animate button on submit
-    anime({
-      targets: '.submit-btn',
-      scale: [1, 0.95, 1],
-      duration: 200,
-      easing: 'easeInOutQuad'
-    });
-
-    // Show success animation (placeholder)
-    anime({
-      targets: '.success-message',
-      opacity: [0, 1],
-      translateY: [20, 0],
-      duration: 500,
-      easing: 'easeOutCubic'
-    });
+    // Simple form submission feedback
+    alert('Thank you! We\'ll contact you soon to schedule your test drive.');
   };
 
   return (
     <section id="contact" ref={sectionRef} className="py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="contact-content text-center mb-16 opacity-0">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-5xl font-bold mb-6">
             <span className="text-chrome">Ready to</span> <span className="text-glow">Experience</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Schedule your test drive today and discover the future of automotive excellence.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Contact Information */}
-          <div className="contact-info space-y-8 opacity-0">
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <div>
               <h3 className="text-2xl font-bold mb-6 text-glow">Get in Touch</h3>
               <div className="space-y-6">
@@ -143,10 +95,14 @@ const ContactSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="contact-form opacity-0">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             <form onSubmit={handleSubmit} className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-8">
               <h3 className="text-2xl font-bold mb-6">Schedule Test Drive</h3>
               
@@ -206,19 +162,17 @@ const ContactSection = () => {
                   ></textarea>
                 </div>
 
-                <button 
+                <motion.button 
                   type="submit" 
-                  className="submit-btn w-full btn-hero"
+                  className="w-full btn-hero"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   Schedule Test Drive
-                </button>
-
-                <div className="success-message opacity-0 text-center text-primary font-medium">
-                  Thank you! We'll contact you soon to schedule your test drive.
-                </div>
+                </motion.button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-const anime = require('animejs');
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import sedanImage from '@/assets/sedan-silver.jpg';
 import suvImage from '@/assets/suv-blue.jpg';
 import coupeImage from '@/assets/coupe-red.jpg';
@@ -62,105 +62,35 @@ const cars: Car[] = [
 
 const CarShowcase = () => {
   const showcaseRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Animate section title
-            anime({
-              targets: '.showcase-title',
-              opacity: [0, 1],
-              translateY: [50, 0],
-              duration: 1000,
-              easing: 'easeOutCubic'
-            });
-
-            // Stagger car card animations
-            anime({
-              targets: '.car-card',
-              opacity: [0, 1],
-              translateY: [80, 0],
-              scale: [0.8, 1],
-              delay: anime.stagger(200),
-              duration: 1200,
-              easing: 'easeOutCubic'
-            });
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    if (showcaseRef.current) {
-      observer.observe(showcaseRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const handleCarHover = (carId: string, isHovering: boolean) => {
-    const card = document.querySelector(`[data-car="${carId}"]`);
-    if (!card) return;
-
-    if (isHovering) {
-      anime({
-        targets: card,
-        translateY: -15,
-        scale: 1.05,
-        duration: 400,
-        easing: 'easeOutCubic'
-      });
-
-      anime({
-        targets: `[data-car="${carId}"] .car-specs`,
-        opacity: [0, 1],
-        translateY: [20, 0],
-        duration: 300,
-        easing: 'easeOutCubic',
-        delay: 100
-      });
-    } else {
-      anime({
-        targets: card,
-        translateY: 0,
-        scale: 1,
-        duration: 400,
-        easing: 'easeOutCubic'
-      });
-
-      anime({
-        targets: `[data-car="${carId}"] .car-specs`,
-        opacity: [1, 0],
-        translateY: [0, 20],
-        duration: 200,
-        easing: 'easeOutCubic'
-      });
-    }
-  };
+  const isInView = useInView(showcaseRef, { once: true, margin: "-100px" });
 
   return (
     <section id="showcase" ref={showcaseRef} className="py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="showcase-title text-5xl font-bold mb-6 opacity-0">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-5xl font-bold mb-6">
             <span className="text-chrome">Our</span> <span className="text-glow">Collection</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto opacity-0">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Choose from our range of premium electric vehicles, each designed for performance, 
             luxury, and sustainability.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.map((car) => (
-            <div
+          {cars.map((car, index) => (
+            <motion.div
               key={car.id}
-              data-car={car.id}
-              className="car-card group cursor-pointer opacity-0"
-              onMouseEnter={() => handleCarHover(car.id, true)}
-              onMouseLeave={() => handleCarHover(car.id, false)}
+              initial={{ opacity: 0, y: 80, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              className="car-card group cursor-pointer"
+              whileHover={{ y: -15, scale: 1.02 }}
             >
               <div className="relative overflow-hidden rounded-xl">
                 <img 
@@ -181,7 +111,12 @@ const CarShowcase = () => {
                   <p className="text-muted-foreground mb-4">{car.type}</p>
                   
                   {/* Specs - Hidden by default, shown on hover */}
-                  <div className="car-specs opacity-0 space-y-2">
+                  <motion.div 
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="flex justify-between text-sm">
                       <span>Range:</span>
                       <span className="text-primary">{car.specs.range}</span>
@@ -194,7 +129,7 @@ const CarShowcase = () => {
                       <span>Power:</span>
                       <span className="text-automotive-gold">{car.specs.power}</span>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
               
@@ -203,7 +138,7 @@ const CarShowcase = () => {
                   Configure
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

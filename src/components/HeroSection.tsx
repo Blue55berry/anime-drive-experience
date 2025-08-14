@@ -1,73 +1,34 @@
 import { useEffect } from 'react';
-const anime = require('animejs');
+import { motion } from 'framer-motion';
 import heroCarImage from '@/assets/hero-car.jpg';
 
 const HeroSection = () => {
-  useEffect(() => {
-    // Hero animation sequence
-    const timeline = anime.timeline({
-      autoplay: true
-    });
-
-    timeline
-      .add({
-        targets: '.hero-title',
-        opacity: [0, 1],
-        translateY: [50, 0],
-        duration: 1200,
-        easing: 'easeOutCubic'
-      })
-      .add({
-        targets: '.hero-subtitle',
-        opacity: [0, 1],
-        translateY: [30, 0],
-        duration: 1000,
-        easing: 'easeOutCubic'
-      }, '-=600')
-      .add({
-        targets: '.hero-car',
-        opacity: [0, 1],
-        scale: [0.8, 1],
-        duration: 1500,
-        easing: 'easeOutCubic'
-      }, '-=800')
-      .add({
-        targets: '.hero-buttons',
-        opacity: [0, 1],
-        translateY: [20, 0],
-        duration: 800,
-        easing: 'easeOutCubic'
-      }, '-=500')
-      .add({
-        targets: '.hero-stats',
-        opacity: [0, 1],
-        translateX: [-50, 0],
-        delay: anime.stagger(100),
-        duration: 600,
-        easing: 'easeOutCubic'
-      }, '-=400');
-
-    // Floating animation for the car
-    anime({
-      targets: '.hero-car',
-      translateY: [-5, 5],
-      duration: 3000,
-      direction: 'alternate',
-      loop: true,
-      easing: 'easeInOutSine'
-    });
-
-  }, []);
-
   const handleExploreClick = () => {
     const showcaseSection = document.getElementById('showcase');
     if (showcaseSection) {
-      anime({
-        targets: 'html, body',
-        scrollTop: showcaseSection.offsetTop - 80,
-        duration: 1200,
-        easing: 'easeInOutCubic'
-      });
+      showcaseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8
+      }
     }
   };
 
@@ -76,31 +37,42 @@ const HeroSection = () => {
       {/* Background spotlight effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent"></div>
       
-      <div className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
+      <motion.div 
+        className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Content */}
         <div className="space-y-8">
-          <div className="space-y-4">
-            <h1 className="hero-title text-6xl lg:text-7xl font-bold opacity-0">
+          <motion.div className="space-y-4" variants={itemVariants}>
+            <h1 className="text-6xl lg:text-7xl font-bold">
               <span className="text-chrome block">Future of</span>
               <span className="text-glow">Driving</span>
             </h1>
-            <p className="hero-subtitle text-xl text-muted-foreground max-w-lg opacity-0">
+            <p className="text-xl text-muted-foreground max-w-lg">
               Experience the next generation of electric vehicles with cutting-edge technology, 
               unparalleled performance, and sustainable innovation.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="hero-buttons flex flex-col sm:flex-row gap-4 opacity-0">
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4" 
+            variants={itemVariants}
+          >
             <button onClick={handleExploreClick} className="btn-hero">
               Explore Models
             </button>
             <button className="btn-outline-chrome">
               Watch Video
             </button>
-          </div>
+          </motion.div>
 
           {/* Performance Stats */}
-          <div className="hero-stats grid grid-cols-3 gap-6 pt-8 opacity-0">
+          <motion.div 
+            className="grid grid-cols-3 gap-6 pt-8" 
+            variants={itemVariants}
+          >
             <div className="text-center">
               <div className="text-3xl font-bold text-primary">0-60</div>
               <div className="text-sm text-muted-foreground">2.1 seconds</div>
@@ -113,21 +85,29 @@ const HeroSection = () => {
               <div className="text-3xl font-bold text-automotive-gold">1020</div>
               <div className="text-sm text-muted-foreground">Horsepower</div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Hero Car Image */}
-        <div className="relative">
-          <div className="hero-car opacity-0">
+        <motion.div 
+          className="relative"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.5 }}
+        >
+          <motion.div
+            animate={{ y: [-5, 5] }}
+            transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+          >
             <img 
               src={heroCarImage} 
               alt="Electric Sports Car"
               className="w-full h-auto object-cover rounded-xl shadow-2xl"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-xl"></div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
