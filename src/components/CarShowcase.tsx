@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
-// @ts-ignore
-import anime from 'animejs/lib/anime.es.js';
+const anime = require('animejs');
 import sedanImage from '@/assets/sedan-silver.jpg';
 import suvImage from '@/assets/suv-blue.jpg';
 import coupeImage from '@/assets/coupe-red.jpg';

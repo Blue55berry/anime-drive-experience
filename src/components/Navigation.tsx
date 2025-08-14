@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-// @ts-ignore
-import anime from 'animejs/lib/anime.es.js';
+const anime = require('animejs');
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);

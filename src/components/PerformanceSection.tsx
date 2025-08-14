@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-// @ts-ignore
-import anime from 'animejs/lib/anime.es.js';
+const anime = require('animejs');
 
 interface Stat {
   label: string;
