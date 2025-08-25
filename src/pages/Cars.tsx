@@ -1,111 +1,15 @@
+import { Link } from 'react-router-dom';
+import { cars } from '../data/cars';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import sedanImage from '@/assets/sedan-silver.jpg';
-import suvImage from '@/assets/suv-blue.jpg';
-import coupeImage from '@/assets/coupe-red.jpg';
 
-interface Car {
-  id: string;
-  name: string;
-  type: string;
-  price: string;
-  image: string;
-  specs: {
-    range: string;
-    acceleration: string;
-    power: string;
-  };
-  color: string;
-}
 
-const cars: Car[] = [
-  {
-    id: 'sedan',
-    name: 'ElectricDrive S',
-    type: 'Luxury Sedan',
-    price: '$89,000',
-    image: sedanImage,
-    specs: {
-      range: '450 miles',
-      acceleration: '3.2s 0-60',
-      power: '680 HP'
-    },
-    color: 'automotive-silver'
-  },
-  {
-    id: 'suv',
-    name: 'ElectricDrive X',
-    type: 'Premium SUV',
-    price: '$95,000',
-    image: suvImage,
-    specs: {
-      range: '420 miles',
-      acceleration: '3.8s 0-60',
-      power: '750 HP'
-    },
-    color: 'primary'
-  },
-  {
-    id: 'coupe',
-    name: 'ElectricDrive R',
-    type: 'Sports Coupe',
-    price: '$125,000',
-    image: coupeImage,
-    specs: {
-      range: '380 miles',
-      acceleration: '2.1s 0-60',
-      power: '1020 HP'
-    },
-    color: 'automotive-red'
-  },
-  {
-    id: 'convertible',
-    name: 'ElectricDrive C',
-    type: 'Luxury Convertible',
-    price: '$135,000',
-    image: sedanImage, // Reusing image for now
-    specs: {
-      range: '400 miles',
-      acceleration: '2.8s 0-60',
-      power: '890 HP'
-    },
-    color: 'automotive-gold'
-  },
-  {
-    id: 'truck',
-    name: 'ElectricDrive T',
-    type: 'Electric Truck',
-    price: '$78,000',
-    image: suvImage, // Reusing image for now
-    specs: {
-      range: '500 miles',
-      acceleration: '4.2s 0-60',
-      power: '600 HP'
-    },
-    color: 'primary'
-  },
-  {
-    id: 'hypercar',
-    name: 'ElectricDrive H',
-    type: 'Hypercar',
-    price: '$250,000',
-    image: coupeImage, // Reusing image for now
-    specs: {
-      range: '350 miles',
-      acceleration: '1.8s 0-60',
-      power: '1500 HP'
-    },
-    color: 'automotive-red'
-  }
-];
-
-const CarShowcase = () => {
-  const showcaseRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(showcaseRef, { once: true, margin: "-100px" });
-
+const Cars = () => {
+   const showcaseRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(showcaseRef, { once: true, margin: "-100px" });
+    
   return (
-    <section id="showcase" ref={showcaseRef} className="py-20 px-6">
+   <section id="Cars" ref={showcaseRef} className="py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div 
           className="text-center mb-16"
@@ -162,9 +66,13 @@ const CarShowcase = () => {
             </motion.div>
           ))}
         </div>
+        <div className="text-center mt-16">
+            <Link to="/" className="px-4 py-2 rounded bg-secondary text-secondary-foreground font-bold">Back to Home</Link>
+        </div>
       </div>
     </section>
   );
 };
 
-export default CarShowcase;
+     
+export default Cars;

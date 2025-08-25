@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import heroCarImage from '@/assets/hero-car.jpg';
+import heroCarImage from '../data/hero-car.jpg';
 
 const HeroSection = () => {
   const handleExploreClick = () => {

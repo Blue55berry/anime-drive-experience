@@ -4,13 +4,17 @@ import CarShowcase from '@/components/CarShowcase';
 import CarInterior3D from '@/components/CarInterior3D';
 import PerformanceSection from '@/components/PerformanceSection';
 import ContactSection from '@/components/ContactSection';
+import CarDetail from './CarDetail';
+import Cars from './Cars';
+
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
       <HeroSection />
-      <CarShowcase />
+     <Cars/>
+      {/* <CarDetail /> */}
       <CarInterior3D />
       <PerformanceSection />
       <ContactSection />
