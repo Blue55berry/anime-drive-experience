@@ -6,7 +6,7 @@ import PerformanceSection from '@/components/PerformanceSection';
 import ContactSection from '@/components/ContactSection';
 import CarDetail from './CarDetail';
 import Cars from './Cars';
-
+import Cursor from '@/components/Cursor'
 
 const Index = () => {
   return (
@@ -14,6 +14,7 @@ const Index = () => {
       <Navigation />
       <HeroSection />
      <Cars/>
+     <Cursor />
       {/* <CarDetail /> */}
       <CarInterior3D />
       <PerformanceSection />
