@@ -6,6 +6,7 @@ import PerformanceSection from '@/components/PerformanceSection';
 import ContactSection from '@/components/ContactSection';
 import CarDetail from './CarDetail';
 import Cars from './Cars';
+// import NotFound from './NotFound';
 import Cursor from '@/components/Cursor'
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
       <CarInterior3D />
       <PerformanceSection />
       <ContactSection />
+      {/* <NotFound /> */}
       
       {/* Footer */}
       <footer className="bg-card/30 backdrop-blur-sm border-t border-border/50 py-12 px-6">
