@@ -101,7 +101,7 @@ const ContactSection = () => {
             <form
               onSubmit={handleSubmit}
               className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 sm:p-8"
-            >
+            id="form">
               <h3 className="text-xl sm:text-2xl font-bold mb-6">Schedule Test Drive</h3>
 
               <div className="space-y-6">
